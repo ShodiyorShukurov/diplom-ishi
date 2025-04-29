@@ -4,12 +4,11 @@ import useSeller from '../../hooks/useSeller';
 import CommentCards from './data/CommentCards';
 
 const SellerCommentPage = () => {
-  const { commentData } = useSeller();
+  const { commentData,getCommentsData } = useSeller();
 
-  console.log(commentData);
   return (
     <Seller>
-      <CommentCards commentData={commentData}/>
+      <CommentCards commentData={commentData} getCommentsData={getCommentsData}/>
     </Seller>
   );
 };

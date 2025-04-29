@@ -1,32 +1,38 @@
 import React, { useState } from 'react';
-import { Card, Button, Space, message } from 'antd';
+import { Card, Button, Space, message, Popconfirm } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import TextArea from 'antd/es/input/TextArea';
 import Api from '../../../api';
 
-const CommentCards = ({ commentData,  onDelete }) => {
+const CommentCards = ({ commentData, getCommentsData }) => {
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editedText, setEditedText] = useState('');
 
   const handleEdit = async (id, text) => {
-    // if (onEdit) {
-    //   onEdit(id, text); 
-    // } else {
-    //   message.success(`Edited comment ID: ${id}, text: ${text}`);
-    // }'
-
     try {
-      const res = await Api.put('')
+      await Api.put('edit-comment/' + id + '/', {
+        text: text,
+      });
+      message.success('Muvaffaqiyatli tahrirlandi');
+      getCommentsData()
     } catch (error) {
-      
+      console.log(error);
+      message.error("Nimadir xato bo'ldi iltimos qayta urinib ko'ring!");
     }
-    setEditingCommentId(null); // tahrirlashdan chiqish
+    setEditingCommentId(null); 
     setEditedText('');
   };
 
-  const handleDelete = (comment) => {
-    if (onDelete) onDelete(comment);
-    else message.warning(`Delete comment ID: ${comment.id}`);
+  const handleDelete = async (id) => {
+    try {
+      await Api.delete('delete-comment/' + id + '/');
+
+      getCommentsData();
+      message.success("Muvaffaqiyatli o'chirildi");
+    } catch (error) {
+      console.log(error);
+      message.error("Nimadir xato bo'ldi iltimos qayta urinib ko'ring!");
+    }
   };
 
   const handleStartEdit = (item) => {
@@ -44,9 +50,15 @@ const CommentCards = ({ commentData,  onDelete }) => {
             boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
           }}
         >
-          <p><strong>Post:</strong> {item.post.text}</p>
-          <p><strong>Telefon:</strong> {item.post.phone_number}</p>
-          <p><strong>Narx:</strong> ${item.post.price}</p>
+          <p>
+            <strong>Post:</strong> {item.post.text}
+          </p>
+          <p>
+            <strong>Telefon:</strong> {item.post.phone_number}
+          </p>
+          <p>
+            <strong>Narx:</strong> ${item.post.price}
+          </p>
           <hr />
 
           {editingCommentId === item.id ? (
@@ -69,7 +81,9 @@ const CommentCards = ({ commentData,  onDelete }) => {
             </>
           ) : (
             <>
-              <p><strong>Comment:</strong> {item.text}</p>
+              <p>
+                <strong>Comment:</strong> {item.text}
+              </p>
               <Space style={{ marginTop: '1rem' }}>
                 <Button
                   type="primary"
@@ -78,13 +92,18 @@ const CommentCards = ({ commentData,  onDelete }) => {
                 >
                   Edit
                 </Button>
-                <Button
-                  danger
-                  icon={<DeleteOutlined />}
-                  onClick={() => handleDelete(item)}
+                <Popconfirm
+                  title="Delete the task"
+                  description="Are you sure to delete this task?"
+                  onConfirm={() => handleDelete(item.id)}
+                  // onCancel={cancel}
+                  okText="Yes"
+                  cancelText="No"
                 >
-                  Delete
-                </Button>
+                  <Button danger icon={<DeleteOutlined />}>
+                    Delete
+                  </Button>
+                </Popconfirm>
               </Space>
             </>
           )}

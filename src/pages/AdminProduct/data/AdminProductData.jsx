@@ -1,10 +1,8 @@
 import React from 'react';
 import { Button, Popconfirm, Table } from 'antd';
-import { DeleteOutlined, EditOutlined, MoreOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { DeleteOutlined, EditOutlined,  } from '@ant-design/icons';
 
-const CustomerData = ({ customerData, openEditModal, handleDelete }) => {
-  const navigate = useNavigate();
+const AdminProductData = ({ productData, handleDelete, openEditModal }) => {
   const columns = [
     {
       title: '№',
@@ -14,29 +12,20 @@ const CustomerData = ({ customerData, openEditModal, handleDelete }) => {
       render: (text, record, index) => <span>{index + 1}</span>,
     },
     {
-      title: 'Text',
-      dataIndex: 'text',
-      key: 'text',
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
       align: 'center',
     },
     {
-      title: 'Phone number',
-      dataIndex: 'phone_number',
-      key: 'phone_number',
-      align: 'center',
-      render: (phone_number) => (
-        <a href={'tel:' + phone_number}>{phone_number}</a>
-      ),
-    },
-    {
-      title: 'Price',
-      key: 'price',
-      dataIndex: 'price',
-      align: 'center',
-      render: (price)=>(
-        <p>${price}</p>
-      )
-    },
+        title: 'Price',
+        key: 'price',
+        dataIndex: 'price',
+        align: 'center',
+        render: (price)=>(
+          <p>${price}</p>
+        )
+      },
     {
       title: 'Action',
       key: 'action',
@@ -61,14 +50,6 @@ const CustomerData = ({ customerData, openEditModal, handleDelete }) => {
               <DeleteOutlined />
             </Button>
           </Popconfirm>
-
-          <Button
-            color="primary"
-            variant="link"
-            onClick={() => navigate('/customer/' + record.id)}
-          >
-            <MoreOutlined />
-          </Button>
         </div>
       ),
     },
@@ -78,10 +59,10 @@ const CustomerData = ({ customerData, openEditModal, handleDelete }) => {
     <Table
       className="mt-6"
       columns={columns}
-      dataSource={customerData}
+      dataSource={productData}
       key={'1'}
       pagination={false}
     />
   );
 };
-export default CustomerData;
+export default AdminProductData;

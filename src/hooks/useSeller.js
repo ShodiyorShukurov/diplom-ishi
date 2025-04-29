@@ -28,7 +28,7 @@ const useSeller = () => {
     getCommentsData();
   }, []);
 
-  return { postData, commentData };
+  return { postData, commentData,getCommentsData };
 };
 
 export default useSeller;

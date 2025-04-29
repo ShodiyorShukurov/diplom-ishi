@@ -20,18 +20,20 @@ import {
 } from 'antd';
 import useUserData from '../../hooks/useUserData';
 import { API_ROLE, API_TOKEN } from '../../utils/constants';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const { Header, Sider, Content } = Layout;
 
 const Customer = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const { userData } = useUserData();
+
   const logOut = () => {
     localStorage.clear(API_TOKEN);
     localStorage.clear(API_ROLE);
@@ -67,30 +69,32 @@ const Customer = ({ children }) => {
     />
   );
 
+  const selectedKey = (() => {
+    if (location.pathname === '/customer') return '1';
+    if (location.pathname === '/customer-compyuter') return '2';
+    return '';
+  })();
+
   return (
     <Layout className="h-screen">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
         <Menu
-          // theme="dark"
           mode="inline"
           className="h-full"
-          defaultSelectedKeys={['1']}
+          selectedKeys={[selectedKey]}
           items={[
             {
               key: '1',
               icon: <PlusCircleOutlined />,
               label: "Post qo'shish ",
+              onClick: () => navigate('/customer'),
             },
             {
               key: '2',
               icon: <VideoCameraOutlined />,
-              label: 'nav 2',
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: 'nav 3',
+              label: "Kompyuter yig'ish",
+              onClick: () => navigate('/customer-compyuter'),
             },
           ]}
         />

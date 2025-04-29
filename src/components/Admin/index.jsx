@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  CommentOutlined,
   UserOutlined,
+  VideoCameraOutlined,
   LogoutOutlined,
   PlusCircleOutlined,
 } from '@ant-design/icons';
@@ -20,7 +20,7 @@ import { API_ROLE, API_TOKEN } from '../../utils/constants';
 import { useLocation, useNavigate } from 'react-router-dom';
 const { Header, Sider, Content } = Layout;
 
-const Seller = ({ children }) => {
+const Admin = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -37,12 +37,6 @@ const Seller = ({ children }) => {
     navigate('/login');
   };
 
-  const selectedKey = (() => {
-    if (location.pathname === '/seller') return '1';
-    if (location.pathname === '/seller-comment') return '2';
-    return '';
-  })();
-
   const profileMenu = (
     <Menu
       items={[
@@ -57,14 +51,10 @@ const Seller = ({ children }) => {
         {
           label: <a href={userData.email}>Email: {userData.email}</a>,
           key: '1',
-          // icon: <SettingOutlined />,
-          // disabled: true,
         },
         {
-          label: `Role: ${userData.role}`,
+          label: `Role: Admin`,
           key: '2',
-          // icon: <SettingOutlined />,
-          // disabled: true,
         },
         {
           label: 'Chiqish',
@@ -75,6 +65,12 @@ const Seller = ({ children }) => {
       ]}
     />
   );
+
+  const selectedKey = (() => {
+    if (location.pathname === '/admin') return '1';
+    if (location.pathname === '/admin-product') return '2';
+    return '';
+  })();
 
   return (
     <Layout className="h-screen">
@@ -88,14 +84,14 @@ const Seller = ({ children }) => {
             {
               key: '1',
               icon: <PlusCircleOutlined />,
-              label: "Postlar",
-              onClick: ()=>navigate('/seller')
+              label: "Category qo'shish ",
+              onClick: () => navigate('/admin'),
             },
             {
               key: '2',
-              icon: <CommentOutlined />,
-              label: 'Komment',
-              onClick: ()=>navigate('/seller-comment')
+              icon: <VideoCameraOutlined />,
+              label: "Product qo'shish",
+              onClick: () => navigate('/admin-product'),
             },
           ]}
         />
@@ -148,4 +144,4 @@ const Seller = ({ children }) => {
     </Layout>
   );
 };
-export default Seller;
+export default Admin;
