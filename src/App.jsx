@@ -11,6 +11,11 @@ import PrivateRoute from './utils/PrivateRoute';
 import AdminCategoryPage from './pages/AdminCategory';
 import AdminProductPage from './pages/AdminProduct/AdminProductPage';
 import CompyuterPage from './pages/Compyuter/CompyuterPage';
+import AdminCpuPage from './pages/AdminCpu/AdminCpuPage';
+import AdminMotherBoard from './pages/AdminMotherBoard/AdminMotherBoard';
+import AdminOtherPage from './pages/AdminOther/AdminOtherPage';
+import AdminBlockPage from './pages/AdminBlock/AdminBlockPage';
+import AdminSocketPage from './pages/AdminSocket/AdminSocketPage';
 
 const App = () => {
   return (
@@ -28,6 +33,11 @@ const App = () => {
         <Route path="/seller-comment" element={<SellerCommentPage />} />
         <Route path="/admin" element={<AdminCategoryPage />} />
         <Route path="/admin-product" element={<AdminProductPage />} />
+        <Route path="/admin-cpu" element={<AdminCpuPage />} />
+        <Route path="/admin-motherboard" element={<AdminMotherBoard/>} />
+        <Route path="/admin-other" element={<AdminOtherPage />} />
+        <Route path="/admin-block" element={<AdminBlockPage />} />
+        <Route path="/admin-socket" element={<AdminSocketPage />} />
       </Route>
       {/* <Route path="/customer-post" element={< />} /> */}
     </Routes>

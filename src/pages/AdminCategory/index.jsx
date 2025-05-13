@@ -19,10 +19,6 @@ const AdminCategoryPage = () => {
 
   return (
     <Admin>
-      <Button color="primary" variant="solid" onClick={() => setIsModal(true)}>
-        Categoriya qo'shish
-      </Button>
-
       <AdminCategoryData
         categoryData={categoryData}
         handleDelete={handleDelete}

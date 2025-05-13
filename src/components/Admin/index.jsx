@@ -3,18 +3,14 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
-  VideoCameraOutlined,
   LogoutOutlined,
   PlusCircleOutlined,
+  ThunderboltOutlined,
+  DesktopOutlined,
+  DatabaseOutlined,
+  PoweroffOutlined,
 } from '@ant-design/icons';
-import {
-  Button,
-  Layout,
-  Menu,
-  theme,
-  Avatar,
-  Dropdown,
-} from 'antd';
+import { Button, Layout, Menu, theme, Avatar, Dropdown } from 'antd';
 import useUserData from '../../hooks/useUserData';
 import { API_ROLE, API_TOKEN } from '../../utils/constants';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -84,14 +80,38 @@ const Admin = ({ children }) => {
             {
               key: '1',
               icon: <PlusCircleOutlined />,
-              label: "Category qo'shish ",
+              label: "Kompyuter qo'shish ",
               onClick: () => navigate('/admin'),
             },
             {
               key: '2',
-              icon: <VideoCameraOutlined />,
-              label: "Product qo'shish",
-              onClick: () => navigate('/admin-product'),
+              icon: <ThunderboltOutlined />,
+              label: "Cpu qo'shish",
+              onClick: () => navigate('/admin-cpu'),
+            },
+            {
+              key: '3',
+              icon: <DesktopOutlined />,
+              label: "MotherBoard qo'shish",
+              onClick: () => navigate('/admin-motherboard'),
+            },
+            {
+              key: '4',
+              icon: <DatabaseOutlined />,
+              label: "Qo'shimchalar qo'shish",
+              onClick: () => navigate('/admin-other'),
+            },
+            {
+              key: '5',
+              icon: <PoweroffOutlined />,
+              label: "BlokPitaniya qo'shish",
+              onClick: () => navigate('/admin-block'),
+            },
+            {
+              key: '6',
+              icon: <PoweroffOutlined />,
+              label: "Socket qo'shish",
+              onClick: () => navigate('/admin-socket'),
             },
           ]}
         />
