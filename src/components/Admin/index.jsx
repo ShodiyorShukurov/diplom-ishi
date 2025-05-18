@@ -13,7 +13,8 @@ import {
   CloudOutlined,
   VideoCameraOutlined,
   KeyOutlined,
-  CloudServerOutlined
+  CloudServerOutlined,
+  WifiOutlined
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme, Avatar, Dropdown } from 'antd';
 import useUserData from '../../hooks/useUserData';
@@ -101,12 +102,6 @@ const Admin = ({ children }) => {
               onClick: () => navigate('/admin-motherboard'),
             },
             {
-              key: '4',
-              icon: <DatabaseOutlined />,
-              label: "Qo'shimchalar qo'shish",
-              onClick: () => navigate('/admin-other'),
-            },
-            {
               key: '5',
               icon: <PoweroffOutlined />,
               label: "BlokPitaniya qo'shish",
@@ -147,6 +142,24 @@ const Admin = ({ children }) => {
               icon: <CloudServerOutlined/>,
               label: "Memories qo'shish",
               onClick: () => navigate('/admin-memories'),
+            },
+            {
+              key: '12',
+              icon: <DesktopOutlined/>,
+              label: "Monitor qo'shish",
+              onClick: () => navigate('/admin-monitor'),
+            },
+            {
+              key: '13',
+              icon: <WifiOutlined />,
+              label: "Wifi qo'shish",
+              onClick: () => navigate('/admin-wifi'),
+            },
+             {
+              key: '14',
+              icon: <WifiOutlined />,
+              label: "Rams qo'shish",
+              onClick: () => navigate('/admin-rams'),
             },
           ]}
         />

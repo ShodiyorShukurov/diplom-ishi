@@ -1,29 +1,24 @@
 import React from 'react';
-import { Modal, Form, Input, Button, message, InputNumber, Select } from 'antd';
+import { Modal, Form, Input, Button, message, InputNumber, } from 'antd';
 import Api from '../../../api';
 
-import useAdminCategory from '../../../hooks/useAdminCategory';
 
-const { Option } = Select;
-
-const AdminOtherModal = ({
+const AdminMonitorsModal = ({
   isModal,
   setIsModal,
   selectedItem,
-  getAdminOther,
+  getAdminMonitors,
   setSelectedItem,
 }) => {
   const [form] = Form.useForm();
-  const { categoryData } = useAdminCategory();
+
 
   React.useEffect(() => {
     if (isModal && selectedItem) {
       form.setFieldsValue({
         name: selectedItem.name || '',
         price: selectedItem.price || '',
-        power: selectedItem.power || '',
-        type: selectedItem.type || '',
-        category_id: selectedItem.category || '',
+        pixel: selectedItem.pixel || ''
       });
     }
   }, [isModal, selectedItem, form]);
@@ -45,36 +40,34 @@ const AdminOtherModal = ({
     const fullData = {
       name: values.name,
       price: values.price,
-      type: values.type,
-      power: values.power,
-      category: values.category_id,
+      pixel: values.pixel
     };
     try {
       if (selectedItem && selectedItem.id) {
-        const res = await Api.put(
-          '/others/' + selectedItem.id + '/',
-          fullData
-        );
+        fullData.category = values.category_id;
+        const res = await Api.put('/monitors/' + selectedItem.id + '/', fullData);
 
         if (res.data) {
-          message.success('Form edit successfully!');
-          getAdminOther();
+          message.success('Form submitted successfully!');
+          getAdminMonitors();
           setIsModal(false);
           form.resetFields();
           setSelectedItem(null);
         }
       } else {
-        const res = await Api.post('/others/', fullData);
+        const res = await Api.post(
+          '/monitors/',
+          fullData
+        );
         if (res.data) {
           message.success('Form submitted successfully!');
-          getAdminOther();
+          getAdminMonitors();
           setIsModal(false);
           form.resetFields();
           setSelectedItem(null);
         }
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
       message.error('Failed to submit the form!');
     }
   };
@@ -104,6 +97,14 @@ const AdminOtherModal = ({
         </Form.Item>
 
         <Form.Item
+          name="pixel"
+          label="Pixel"
+          rules={[{ required: true, message: 'Please enter pixel!' }]}
+        >
+          <Input placeholder="Enter pixel here" />
+        </Form.Item>
+
+        <Form.Item
           name="price"
           label="Price"
           rules={[{ required: true, message: 'Please enter price!' }]}
@@ -113,40 +114,9 @@ const AdminOtherModal = ({
             style={{ width: '100%' }}
           />
         </Form.Item>
-        <Form.Item
-          name="power"
-          label="Power (W)"
-          rules={[{ required: true, message: 'Please enter power!' }]}
-        >
-          <InputNumber
-            placeholder="Enter power here"
-            style={{ width: '100%' }}
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="type"
-          label="Type"
-          rules={[{ required: true, message: 'Please select type!' }]}
-        >
-          <Input placeholder="Enter type here" />
-        </Form.Item>
-        <Form.Item
-          name="category_id"
-          label="Category"
-          rules={[{ required: true, message: 'Please choose category!' }]}
-        >
-          <Select placeholder="Choose category">
-            {categoryData.map((item) => (
-              <Option key={item.id} value={item.id}>
-                {item.name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-export default AdminOtherModal;
+export default AdminMonitorsModal;

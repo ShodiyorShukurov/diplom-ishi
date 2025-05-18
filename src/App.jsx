@@ -13,7 +13,6 @@ import AdminProductPage from './pages/AdminProduct/AdminProductPage';
 import CompyuterPage from './pages/Compyuter/CompyuterPage';
 import AdminCpuPage from './pages/AdminCpu/AdminCpuPage';
 import AdminMotherBoard from './pages/AdminMotherBoard/AdminMotherBoard';
-import AdminOtherPage from './pages/AdminOther/AdminOtherPage';
 import AdminBlockPage from './pages/AdminBlock/AdminBlockPage';
 import AdminSocketPage from './pages/AdminSocket/AdminSocketPage';
 import AdminAccessorsPage from './pages/AdminAccessors/AdminAccessorsPage';
@@ -21,6 +20,9 @@ import AdminCollersPage from './pages/AdminCollers/AdminCollersPage';
 import AdminGpusPage from './pages/AdminGpus/AdminGpusPage';
 import AdminKeysPage from './pages/AdminKeys/AdminKeysPage';
 import AdminMemoriesPage from './pages/AdminMemories/AdminMemoriesPage';
+import AdminMonitorsPage from './pages/AdminMonitors/AdminMonitorsPage';
+import AdminWifiPage from './pages/AdminWifi/AdminWifiPage';
+import AdminRamsPage from './pages/AdminRams/AdminRamsPage';
 
 const App = () => {
   return (
@@ -40,7 +42,6 @@ const App = () => {
         <Route path="/admin-product" element={<AdminProductPage />} />
         <Route path="/admin-cpu" element={<AdminCpuPage />} />
         <Route path="/admin-motherboard" element={<AdminMotherBoard/>} />
-        <Route path="/admin-other" element={<AdminOtherPage />} />
         <Route path="/admin-block" element={<AdminBlockPage />} />
         <Route path="/admin-socket" element={<AdminSocketPage />} />
         <Route path="/admin-accessors" element={<AdminAccessorsPage />} />
@@ -48,6 +49,9 @@ const App = () => {
         <Route path='/admin-gpus' element={<AdminGpusPage/>} />
         <Route path='/admin-keys' element={<AdminKeysPage/>} />
         <Route path='/admin-memories' element={<AdminMemoriesPage/>} />
+        <Route path='/admin-monitor' element={<AdminMonitorsPage/>} />
+        <Route path='/admin-wifi' element={<AdminWifiPage/>} />
+        <Route path='/admin-rams' element={<AdminRamsPage/>} />
       </Route>
       {/* <Route path="/customer-post" element={< />} /> */}
     </Routes>

@@ -1,54 +1,70 @@
-import React from 'react';
-import { Table, Card, Typography, Tag, Button, Popconfirm } from 'antd';
+import { Table, Tag, Button, Popconfirm, Card, Typography } from 'antd';
 import {
-  DatabaseOutlined,
   DeleteOutlined,
   EditOutlined,
+  VideoCameraOutlined,
 } from '@ant-design/icons';
 
 const { Title } = Typography;
 
-const AdminOtherData = ({ otherData, openEditModal, handleDelete }) => {
-  // Define columns for the Ant Design Table
+const AdminGpusData = ({ ramsData, openEditModal, handleDelete }) => {
   const columns = [
+    {
+      title: '№',
+      dataIndex: 'id',
+      key: 'id',
+      render: (_, __, index) => (
+        <span className="font-medium text-gray-700">{index + 1}</span>
+      ),
+    },
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      sorter: (a, b) => a.name.localeCompare(b.name), // Enable sorting
+      render: (text) => (
+        <span className="text-blue-600 font-semibold">{text}</span>
+      ),
+    },
+    {
+      title: 'Power',
+      dataIndex: 'power',
+      key: 'power',
+      render: (text) => (
+        <Tag color="green" className="text-sm">
+          {text} W
+        </Tag>
+      ),
+    },
+
+    {
+      title: 'Type',
+      dataIndex: 'type',
+      key: 'type',
+      render: (text) => (
+        <Tag color="green" className="text-sm">
+          {text}
+        </Tag>
+      ),
     },
     {
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
-      render: (price) => `$${parseFloat(price).toFixed(2)}`, // Format price with 2 decimal places
-      sorter: (a, b) => parseFloat(a.price) - parseFloat(b.price), // Sort as numbers
-    },
-    {
-      title: 'Power (W)',
-      dataIndex: 'power',
-      key: 'power',
-      sorter: (a, b) => a.power - b.power,
-    },
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
-      render: (type) => (
-        <Tag
-          color={type === 'ssd' ? 'blue' : type === 'hdd' ? 'green' : 'purple'}
-        >
-          {type.toUpperCase()}
+      render: (text) => (
+        <Tag color="green" className="text-sm">
+          ${text}
         </Tag>
-      ), // Display type as a colored tag
-      sorter: (a, b) => a.type.localeCompare(b.type),
+      ),
     },
     {
-      title: 'Category',
+      title: 'Category Id',
       dataIndex: 'category',
       key: 'category',
-      render: (category) => `${category}`,
-      sorter: (a, b) => a.category - b.category,
+      render: (text) => (
+        <Tag color="blue" className="text-sm">
+          {text}
+        </Tag>
+      ),
     },
     {
       title: 'Action',
@@ -83,8 +99,8 @@ const AdminOtherData = ({ otherData, openEditModal, handleDelete }) => {
     <Card
       title={
         <Title level={4}>
-          <DatabaseOutlined style={{ marginRight: 8 }} />
-          Other Components Inventory
+          <VideoCameraOutlined style={{ marginRight: '8px' }} />
+          Rams Inventory
         </Title>
       }
       style={{
@@ -95,13 +111,15 @@ const AdminOtherData = ({ otherData, openEditModal, handleDelete }) => {
     >
       <Table
         columns={columns}
-        dataSource={otherData}
+        dataSource={ramsData}
         rowKey="id" // Unique key for each row
+        pagination={null} // Add pagination (5 items per page)
         bordered
         size="middle" // Compact table size
+        scroll={{ x: true }} // Enable horizontal scroll for small screens
       />
     </Card>
   );
 };
 
-export default AdminOtherData;
+export default AdminGpusData;
