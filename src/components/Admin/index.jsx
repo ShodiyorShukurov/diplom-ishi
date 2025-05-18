@@ -10,7 +10,10 @@ import {
   DatabaseOutlined,
   PoweroffOutlined,
   AppstoreOutlined,
-  CloudOutlined
+  CloudOutlined,
+  VideoCameraOutlined,
+  KeyOutlined,
+  CloudServerOutlined
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme, Avatar, Dropdown } from 'antd';
 import useUserData from '../../hooks/useUserData';
@@ -126,6 +129,24 @@ const Admin = ({ children }) => {
               icon: <CloudOutlined />,
               label: "Collers qo'shish",
               onClick: () => navigate('/admin-collers'),
+            },
+            {
+              key: '9',
+              icon: <VideoCameraOutlined />,
+              label: "Gpu qo'shish",
+              onClick: () => navigate('/admin-gpus'),
+            },
+            {
+              key: '10',
+              icon: <KeyOutlined/>,
+              label: "Keys qo'shish",
+              onClick: () => navigate('/admin-keys'),
+            },
+            {
+              key: '11',
+              icon: <CloudServerOutlined/>,
+              label: "Memories qo'shish",
+              onClick: () => navigate('/admin-memories'),
             },
           ]}
         />

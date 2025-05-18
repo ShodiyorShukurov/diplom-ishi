@@ -18,6 +18,9 @@ import AdminBlockPage from './pages/AdminBlock/AdminBlockPage';
 import AdminSocketPage from './pages/AdminSocket/AdminSocketPage';
 import AdminAccessorsPage from './pages/AdminAccessors/AdminAccessorsPage';
 import AdminCollersPage from './pages/AdminCollers/AdminCollersPage';
+import AdminGpusPage from './pages/AdminGpus/AdminGpusPage';
+import AdminKeysPage from './pages/AdminKeys/AdminKeysPage';
+import AdminMemoriesPage from './pages/AdminMemories/AdminMemoriesPage';
 
 const App = () => {
   return (
@@ -42,6 +45,9 @@ const App = () => {
         <Route path="/admin-socket" element={<AdminSocketPage />} />
         <Route path="/admin-accessors" element={<AdminAccessorsPage />} />
         <Route path='/admin-collers' element={<AdminCollersPage/>} />
+        <Route path='/admin-gpus' element={<AdminGpusPage/>} />
+        <Route path='/admin-keys' element={<AdminKeysPage/>} />
+        <Route path='/admin-memories' element={<AdminMemoriesPage/>} />
       </Route>
       {/* <Route path="/customer-post" element={< />} /> */}
     </Routes>
