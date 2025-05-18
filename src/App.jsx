@@ -16,6 +16,8 @@ import AdminMotherBoard from './pages/AdminMotherBoard/AdminMotherBoard';
 import AdminOtherPage from './pages/AdminOther/AdminOtherPage';
 import AdminBlockPage from './pages/AdminBlock/AdminBlockPage';
 import AdminSocketPage from './pages/AdminSocket/AdminSocketPage';
+import AdminAccessorsPage from './pages/AdminAccessors/AdminAccessorsPage';
+import AdminCollersPage from './pages/AdminCollers/AdminCollersPage';
 
 const App = () => {
   return (
@@ -38,6 +40,8 @@ const App = () => {
         <Route path="/admin-other" element={<AdminOtherPage />} />
         <Route path="/admin-block" element={<AdminBlockPage />} />
         <Route path="/admin-socket" element={<AdminSocketPage />} />
+        <Route path="/admin-accessors" element={<AdminAccessorsPage />} />
+        <Route path='/admin-collers' element={<AdminCollersPage/>} />
       </Route>
       {/* <Route path="/customer-post" element={< />} /> */}
     </Routes>

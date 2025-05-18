@@ -9,6 +9,8 @@ import {
   DesktopOutlined,
   DatabaseOutlined,
   PoweroffOutlined,
+  AppstoreOutlined,
+  CloudOutlined
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme, Avatar, Dropdown } from 'antd';
 import useUserData from '../../hooks/useUserData';
@@ -112,6 +114,18 @@ const Admin = ({ children }) => {
               icon: <PoweroffOutlined />,
               label: "Socket qo'shish",
               onClick: () => navigate('/admin-socket'),
+            },
+            {
+              key: '7',
+              icon: <AppstoreOutlined />,
+              label: "Accessorlar qo'shish",
+              onClick: () => navigate('/admin-accessors'),
+            },
+            {
+              key: '8',
+              icon: <CloudOutlined />,
+              label: "Collers qo'shish",
+              onClick: () => navigate('/admin-collers'),
             },
           ]}
         />

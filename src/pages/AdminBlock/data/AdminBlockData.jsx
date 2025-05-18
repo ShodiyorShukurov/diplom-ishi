@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Card, Typography, Tag, Button, Popconfirm } from 'antd';
+import { Table, Card, Typography, Button, Popconfirm } from 'antd';
 import {
   DeleteOutlined,
   EditOutlined,
@@ -9,7 +9,6 @@ import {
 const { Title } = Typography;
 
 const AdminBlockData = ({ blockData, openEditModal, handleDelete }) => {
-  // Define columns for the Ant Design Table
   const columns = [
     {
       title: '№',

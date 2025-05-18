@@ -1,22 +1,46 @@
-import React from 'react';
-import { Table, Card, Typography, Button, Popconfirm } from 'antd';
-import { ApiOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Table, Tag, Button, Popconfirm, Card, Typography } from 'antd';
+import { DeleteOutlined, EditOutlined, CloudOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
-const AdminSocketData = ({ soketData, handleDelete, openEditModal }) => {
+
+const AdminCollersData = ({ collersData, openEditModal, handleDelete }) => {
   const columns = [
     {
       title: '№',
       dataIndex: 'id',
       key: 'id',
-      render: (text, record, index) => index + 1, // Display index as row number
+      render: (_, __, index) => (
+        <span className="font-medium text-gray-700">{index + 1}</span>
+      ),
     },
     {
-      title: 'Socket Name',
+      title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      sorter: (a, b) => a.name.localeCompare(b.name), // Enable sorting
+      render: (text) => (
+        <span className="text-blue-600 font-semibold">{text}</span>
+      ),
+    },
+    {
+      title: 'Price',
+      dataIndex: 'price',
+      key: 'price',
+      render: (text) => (
+        <Tag color="green" className="text-sm">
+          ${text}
+        </Tag>
+      ),
+    },
+    {
+      title: 'Category Id',
+        dataIndex: 'category',
+        key: 'category',
+        render: (text) => (
+          <Tag color="blue" className="text-sm">
+            {text}
+          </Tag>
+        )
     },
     {
       title: 'Action',
@@ -48,11 +72,11 @@ const AdminSocketData = ({ soketData, handleDelete, openEditModal }) => {
   ];
 
   return (
-    <Card
+   <Card
       title={
         <Title level={4}>
-          <ApiOutlined style={{ marginRight: 8 }} />
-          Socket Inventory
+          <CloudOutlined style={{ marginRight: 8 }} />
+            Collers Inventory
         </Title>
       }
       style={{
@@ -63,7 +87,7 @@ const AdminSocketData = ({ soketData, handleDelete, openEditModal }) => {
     >
       <Table
         columns={columns}
-        dataSource={soketData}
+        dataSource={collersData}
         rowKey="id" // Unique key for each row
         pagination={null} // Add pagination (5 items per page)
         bordered
@@ -74,4 +98,4 @@ const AdminSocketData = ({ soketData, handleDelete, openEditModal }) => {
   );
 };
 
-export default AdminSocketData;
+export default AdminCollersData;

@@ -1,4 +1,3 @@
-import React from 'react';
 import Admin from '../../components/Admin';
 import useAdminBlock from '../../hooks/useAdminBlock';
 import AdminBlockData from './data/AdminBlockData';
