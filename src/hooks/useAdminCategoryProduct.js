@@ -2,15 +2,15 @@ import React from 'react';
 import Api from '../api';
 import { message } from 'antd';
 
-const useAdminProduct = () => {
-  const [productData, setProductData] = React.useState([]);
+const useAdminCategoryProduct = () => {
+  const [categoryProductData, setCategoryProductData] = React.useState([]);
   const [isModal, setIsModal] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState(null);
 
-  const getAdminProduct = async () => {
+  const getAdminProductCategory = async () => {
     try {
-      const res = await Api.get('/product/');
-      setProductData(res.data);
+      const res = await Api.get('/category-product/');
+      setCategoryProductData(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -23,8 +23,8 @@ const useAdminProduct = () => {
 
   const handleDelete = async (id) => {
     try {
-      await Api.delete('/product/' + id + '/');
-      getAdminProduct();
+      await Api.delete('/category-product/' + id + '/');
+      getAdminProductCategory();
       message.success('Success delete');
     } catch (error) {
       console.log(error);
@@ -33,19 +33,19 @@ const useAdminProduct = () => {
   };
 
   React.useEffect(() => {
-    getAdminProduct();
+    getAdminProductCategory();
   }, []);
 
   return {
     isModal,
     setIsModal,
-    productData,
+    categoryProductData,
     handleDelete,
     openEditModal,
     selectedItem,
-    getAdminProduct,
-    setSelectedItem,
+    getAdminProductCategory,
+    setSelectedItem
   };
 };
 
-export default useAdminProduct;
+export default useAdminCategoryProduct;

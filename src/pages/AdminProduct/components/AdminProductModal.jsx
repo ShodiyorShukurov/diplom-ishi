@@ -1,7 +1,18 @@
-import React from 'react';
-import { Modal, Form, Input, Button, message, InputNumber, Select } from 'antd';
+import React, { useState } from 'react';
+import {
+  Modal,
+  Form,
+  Input,
+  Button,
+  message,
+  InputNumber,
+  Select,
+  Upload,
+} from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 import Api from '../../../api';
 import useAdminCategory from '../../../hooks/useAdminCategory';
+import useAdminCategoryProduct from '../../../hooks/useAdminCategoryProduct';
 
 const { Option } = Select;
 
@@ -13,15 +24,28 @@ const AdminProductModal = ({
   setSelectedItem,
 }) => {
   const [form] = Form.useForm();
-  const { categoryData } = useAdminCategory();
+  const { categoryProductData } = useAdminCategoryProduct();
+  const [fileList, setFileList] = useState([]);
 
   React.useEffect(() => {
     if (isModal && selectedItem) {
       form.setFieldsValue({
         name: selectedItem.name || '',
+        text: selectedItem.text || '',
         price: selectedItem.price || '',
-        category_id: selectedItem.category.id || '',
+        category_id: selectedItem.category || '',
       });
+     
+      if (selectedItem.image) {
+        setFileList([
+          {
+            uid: '-1',
+            name: 'image.png',
+            status: 'done',
+            url: selectedItem.image,
+          },
+        ]);
+      }
     }
   }, [isModal, selectedItem, form]);
 
@@ -30,8 +54,6 @@ const AdminProductModal = ({
       .validateFields()
       .then((values) => {
         onFinish(values);
-        // form.resetFields();
-        // onClose();
       })
       .catch((info) => {
         console.log('Validation Failed:', info);
@@ -39,35 +61,50 @@ const AdminProductModal = ({
   };
 
   const onFinish = async (values) => {
-    const fullData = {
-      name: values.name,
-      price: values.price,
-    };
+    const formData = new FormData();
+    formData.append('name', values.name);
+    formData.append('price', values.price);
+    formData.append('text', values.text || '');
+    formData.append('category', values.category_id);
+    if (fileList.length && fileList[0].originFileObj) {
+      formData.append('image', fileList[0].originFileObj);
+    }
+
     try {
       if (selectedItem && selectedItem.id) {
-        fullData.category = values.category_id;
-        const res = await Api.put(
-          '/edit-product/' + selectedItem.id + '/',
-          fullData
+        const res = await Api.patch(
+          '/product/' + selectedItem.id + '/',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
         );
-
         if (res.data) {
-          message.success('Form submitted successfully!');
+          message.success('Product updated successfully!');
           getAdminProduct();
           setIsModal(false);
           form.resetFields();
+          setFileList([]);
           setSelectedItem(null);
         }
       } else {
         const res = await Api.post(
-          '/create-product/' + values.category_id + '/',
-          fullData
+          '/product/',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
         );
         if (res.data) {
-          message.success('Form submitted successfully!');
+          message.success('Product created successfully!');
           getAdminProduct();
           setIsModal(false);
           form.resetFields();
+          setFileList([]);
           setSelectedItem(null);
         }
       }
@@ -80,7 +117,6 @@ const AdminProductModal = ({
     <Modal
       title="Product Form"
       open={isModal}
-      onOk={handleOk}
       onCancel={() => setIsModal(false)}
       footer={[
         <Button key="back" onClick={() => setIsModal(false)}>
@@ -99,13 +135,22 @@ const AdminProductModal = ({
         >
           <Input placeholder="Enter name here" />
         </Form.Item>
+
+        <Form.Item
+          name="text"
+          label="Text"
+          rules={[{ required: true, message: 'Please enter Text!' }]}
+        >
+          <Input placeholder="Enter text here" />
+        </Form.Item>
+
         <Form.Item
           name="category_id"
           label="Category"
           rules={[{ required: true, message: 'Please choose category!' }]}
         >
           <Select placeholder="Choose category">
-            {categoryData.map((item) => (
+            {categoryProductData.map((item) => (
               <Option key={item.id} value={item.id}>
                 {item.name}
               </Option>
@@ -118,10 +163,20 @@ const AdminProductModal = ({
           label="Price"
           rules={[{ required: true, message: 'Please enter price!' }]}
         >
-          <InputNumber
-            placeholder="Enter price here"
-            style={{ width: '100%' }}
-          />
+          <InputNumber placeholder="Enter price here" style={{ width: '100%' }} />
+        </Form.Item>
+
+        <Form.Item label="Image">
+          <Upload
+            beforeUpload={() => false}
+            fileList={fileList}
+            onChange={({ fileList }) => setFileList(fileList)}
+            accept="image/*"
+            maxCount={1}
+            listType="picture"
+          >
+            <Button icon={<UploadOutlined />}>Upload Image</Button>
+          </Upload>
         </Form.Item>
       </Form>
     </Modal>

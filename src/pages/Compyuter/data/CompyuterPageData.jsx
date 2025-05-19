@@ -10,11 +10,23 @@ const CompyuterPageData = ({
   cpuData,
   setMotherBoardId,
   motherBoardData,
-  setOtherDataId,
-  otherData,
+  setGpuDataId,
+  gpuData,
+  ramData,
+  setRamDataId,
+  memoriesData,
+  getMemories,
+  setCollerDataId,
+  collerData,
+  setKeysDataId,
+  keysData,
   powerunit,
   getPowerUnit,
+  monitorData,
+  getMonitor,
   setIsModalOpen,
+  wifiData,
+  getWifi,
 }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -42,25 +54,41 @@ const CompyuterPageData = ({
   };
 
   //Other data
-  const [selectedItems, setSelectedItems] = useState([]);
-
-  const type = selectedItems.filter((type) => type.type == 'video_card');
+  const [selectedItems, setSelectedItems] = useState(null);
 
   const handleOtherSelect = (item) => {
-    const alreadySelected = selectedItems.some((s) => s.id === item.id);
-    let updated;
-
-    if (alreadySelected) {
-      updated = selectedItems.filter((s) => s.id !== item.id);
-    } else {
-      updated = [...selectedItems, item];
-    }
-
-    setSelectedItems(updated);
-    localStorage.setItem('selectedStorages', JSON.stringify(updated));
+    setSelectedItems(item.id);
+    localStorage.setItem('selectedGpus', JSON.stringify(item));
   };
 
-  const isSelected = (id) => selectedItems.some((item) => item.id === id);
+  // Ram
+  const [selectedRamId, setSelectedRamId] = useState(null);
+
+  const handleRamSelect = (item) => {
+    setSelectedRamId(item.id);
+    localStorage.setItem('selectedRam', JSON.stringify(item));
+  };
+
+  // Memory
+  const [selectedMemoryId, setSelectedMemoryId] = useState(null);
+  const handleMemorySelect = (item) => {
+    setSelectedMemoryId(item.id);
+    localStorage.setItem('selectedMemory', JSON.stringify(item));
+  };
+
+  // Coller
+  const [selectedCollerId, setSelectedCollerId] = useState(null);
+  const handleCollerSelect = (item) => {
+    setSelectedCollerId(item.id);
+    localStorage.setItem('selectedColler', JSON.stringify(item));
+  };
+
+  // Keys
+  const [selectedKeysId, setSelectedKeysId] = useState(null);
+  const handleKeysSelect = (item) => {
+    setSelectedKeysId(item.id);
+    localStorage.setItem('selectedKeys', JSON.stringify(item));
+  };
 
   // PowerBlock
   const [powerBlock, setPowerBlock] = useState(null);
@@ -68,6 +96,20 @@ const CompyuterPageData = ({
   const handlePowerSelect = (item) => {
     setPowerBlock(item);
     localStorage.setItem('selectedPowerSupply', JSON.stringify(item));
+  };
+
+  // Monitor
+  const [selectedMonitorId, setSelectedMonitorId] = useState(null);
+  const handleMonitorSelect = (item) => {
+    setSelectedMonitorId(item.id);
+    localStorage.setItem('selectedMonitor', JSON.stringify(item));
+  };
+
+  // Wifi
+  const [selectedWifiId, setSelectedWifiId] = useState(null);
+  const handleWifiSelect = (item) => {
+    setSelectedWifiId(item.id);
+    localStorage.setItem('selectedWifi', JSON.stringify(item));
   };
 
   if (cpuData.length === 0) {
@@ -173,7 +215,7 @@ const CompyuterPageData = ({
     );
   }
 
-  if (otherData.length === 0) {
+  if (gpuData.length === 0) {
     return (
       <div className="min-h-screen">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">
@@ -239,7 +281,7 @@ const CompyuterPageData = ({
                 localStorage.getItem('selectedOption')
               );
               const selectedId = selectedOption?.id;
-              setOtherDataId(selectedId);
+              setGpuDataId(selectedId);
             }}
           >
             Keyingi
@@ -249,57 +291,364 @@ const CompyuterPageData = ({
     );
   }
 
-  if (powerunit.length === 0) {
+  if (ramData.length === 0) {
     return (
       <div className="p-6">
-        <h2 className="text-2xl font-semibold text-center mb-6">
-          Qurilmalarni tanlang
-        </h2>
+        <h2 className="text-2xl font-semibold text-center mb-6">Gpu tanlang</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {otherData.map((item) => (
+          {gpuData.map((item) => (
             <Card
               key={item.id}
-              className={`transition-all duration-300 shadow-md hover:shadow-lg rounded-2xl border-2 ${
-                isSelected(item.id) ? 'border-blue-500' : 'border-gray-200'
-              }`}
+              className={`transition-all duration-300 shadow-md hover:shadow-lg rounded-2xl border-2`}
+              style={{
+                border:
+                  selectedItems === item.id ? '2px solid #1890ff' : 'none',
+                borderRadius: '16px',
+              }}
               title={item.name}
-              extra={
-                isSelected(item.id) ? (
-                  <CheckCircleOutlined className="text-blue-500 text-xl" />
-                ) : null
-              }
-              style={{ borderRadius: '16px' }}
+              onClick={() => handleOtherSelect(item)}
             >
+              <p>
+                <strong>Nomi:</strong>
+                {item.name}
+              </p>
               <p>
                 <strong>Narxi:</strong> ${item.price}
               </p>
               <p>
-                <strong>Turi:</strong> {item.type.toUpperCase()}
-              </p>
-              <p>
                 <strong>Quvvati:</strong> {item.power} W
               </p>
-              <Button
-                type={isSelected(item.id) ? 'primary' : 'default'}
-                block
-                className="mt-4 rounded-xl"
-                onClick={() => handleOtherSelect(item)}
-              >
-                {isSelected(item.id) ? 'Tanlangan' : 'Tanlash'}
-              </Button>
+              <p>
+                <strong>Category Id:</strong> {item.category}
+              </p>
             </Card>
           ))}
         </div>
         <Button
-          className="mt-5"
+          style={{ marginTop: '20px' }}
           disabled={!selectedItems}
+          type="primary"
+          onClick={() => {
+            const selectedOption = JSON.parse(
+              localStorage.getItem('selectedOption')
+            );
+            const selectedId = selectedOption?.id;
+            setRamDataId(selectedId);
+          }}
+        >
+          Keyingi
+        </Button>
+      </div>
+    );
+  }
+
+  if (memoriesData.length === 0) {
+    return (
+      <div className="p-6">
+        <h2 className="text-2xl font-semibold text-center mb-6">Ram tanlang</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {ramData.map((item) => (
+            <Card
+              key={item.id}
+              className={`transition-all duration-300 shadow-md hover:shadow-lg rounded-2xl border-2`}
+              style={{
+                border:
+                  selectedRamId === item.id ? '2px solid #1890ff' : 'none',
+                borderRadius: '16px',
+              }}
+              title={item.name}
+              onClick={() => handleRamSelect(item)}
+            >
+              <p>
+                <strong>Nomi:</strong>
+                {item.name}
+              </p>
+              <p>
+                <strong>Narxi:</strong> ${item.price}
+              </p>
+              <p>
+                <strong>Quvvati:</strong> {item.power} W
+              </p>
+
+              <p>
+                <strong>Type:</strong> {item.type}
+              </p>
+              <p>
+                <strong>Category Id:</strong> {item.category}
+              </p>
+            </Card>
+          ))}
+        </div>
+        <Button
+          style={{ marginTop: '20px' }}
+          disabled={!selectedRamId}
+          type="primary"
+          onClick={() => {
+            getMemories();
+          }}
+        >
+          Keyingi
+        </Button>
+      </div>
+    );
+  }
+
+  if (collerData.length === 0) {
+    return (
+      <div className="p-6">
+        <h2 className="text-2xl font-semibold text-center mb-6">
+          Xotira tanlang
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {memoriesData.map((item) => (
+            <Card
+              key={item.id}
+              className={`transition-all duration-300 shadow-md hover:shadow-lg rounded-2xl border-2`}
+              style={{
+                border:
+                  selectedMemoryId === item.id ? '2px solid #1890ff' : 'none',
+                borderRadius: '16px',
+              }}
+              title={item.name}
+              onClick={() => handleMemorySelect(item)}
+            >
+              <p>
+                <strong>Nomi:</strong>
+                {item.name}
+              </p>
+              <p>
+                <strong>Narxi:</strong> ${item.price}
+              </p>
+            </Card>
+          ))}
+        </div>
+        <Button
+          style={{ marginTop: '20px' }}
+          disabled={!selectedMemoryId}
+          type="primary"
+          onClick={() => {
+            const selectedOption = JSON.parse(
+              localStorage.getItem('selectedOption')
+            );
+            const selectedId = selectedOption?.id;
+            setCollerDataId(selectedId);
+          }}
+        >
+          Keyingi
+        </Button>
+      </div>
+    );
+  }
+
+  if (keysData.length === 0) {
+    return (
+      <div className="p-6">
+        <h2 className="text-2xl font-semibold text-center mb-6">
+          Coller tanlang
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {collerData.map((item) => (
+            <Card
+              key={item.id}
+              className={`transition-all duration-300 shadow-md hover:shadow-lg rounded-2xl border-2`}
+              style={{
+                border:
+                  selectedCollerId === item.id ? '2px solid #1890ff' : 'none',
+                borderRadius: '16px',
+              }}
+              title={item.name}
+              onClick={() => handleCollerSelect(item)}
+            >
+              <p>
+                <strong>Nomi:</strong>
+                {item.name}
+              </p>
+              <p>
+                <strong>Narxi:</strong> ${item.price}
+              </p>
+              <p>
+                <strong>Category:</strong>
+                {item.category}
+              </p>
+            </Card>
+          ))}
+        </div>
+        <Button
+          style={{ marginTop: '20px' }}
+          disabled={!selectedCollerId}
+          type="primary"
+          onClick={() => {
+            const selectedOption = JSON.parse(
+              localStorage.getItem('selectedOption')
+            );
+            const selectedId = selectedOption?.id;
+            setKeysDataId(selectedId);
+          }}
+        >
+          Keyingi
+        </Button>
+      </div>
+    );
+  }
+
+  if (powerunit.length === 0) {
+    return (
+      <div className="p-6">
+        <h2 className="text-2xl font-semibold text-center mb-6">
+          Keys tanlang
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {keysData.map((item) => (
+            <Card
+              key={item.id}
+              className={`transition-all duration-300 shadow-md hover:shadow-lg rounded-2xl border-2`}
+              style={{
+                border:
+                  selectedKeysId === item.id ? '2px solid #1890ff' : 'none',
+                borderRadius: '16px',
+              }}
+              title={item.name}
+              onClick={() => handleKeysSelect(item)}
+            >
+              <p>
+                <strong>Nomi:</strong>
+                {item.name}
+              </p>
+              <p>
+                <strong>Narxi:</strong> ${item.price}
+              </p>
+              <p>
+                <strong>Category:</strong>
+                {item.category}
+              </p>
+            </Card>
+          ))}
+        </div>
+        <Button
+          style={{ marginTop: '20px' }}
+          disabled={!selectedKeysId}
           type="primary"
           onClick={() => {
             const selectedOption = JSON.parse(
               localStorage.getItem('selectedCpu')
             );
-            const selectedId = selectedOption?.power;
-            getPowerUnit(selectedId, type[0]?.power);
+
+            const selectedOption2 = JSON.parse(
+              localStorage.getItem('selectedGpus')
+            );
+            const powerCpu = selectedOption?.power;
+            const powerGpu = selectedOption2?.power;
+            getPowerUnit(powerCpu, powerGpu);
+          }}
+        >
+          Keyingi
+        </Button>
+      </div>
+    );
+  }
+
+  if (monitorData.length === 0) {
+    return (
+      <div className="p-6">
+        <h2 className="text-2xl font-semibold text-center mb-6">
+          Quvvat manbaini tanlang
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {powerunit.map((item) => (
+            <Card
+              key={item.id}
+              title={item.name}
+              className={`transition-all duration-300 shadow-md hover:shadow-lg rounded-2xl border-2 ${
+                powerBlock?.id === item.id
+                  ? 'border-green-500'
+                  : 'border-gray-200'
+              }`}
+              extra={
+                powerBlock?.id === item.id ? (
+                  <CheckCircleOutlined className="text-green-500 text-xl" />
+                ) : null
+              }
+              style={{ borderRadius: '16px' }}
+            >
+              <p>
+                <strong>Quvvati:</strong> {item.power}W
+              </p>
+              <p>
+                <strong>Narxi:</strong> ${item.price}
+              </p>
+              <Button
+                type={powerBlock?.id === item.id ? 'primary' : 'default'}
+                block
+                className="mt-4 rounded-xl"
+                onClick={() => handlePowerSelect(item)}
+              >
+                {powerBlock?.id === item.id ? 'Tanlangan' : 'Tanlash'}
+              </Button>
+            </Card>
+          ))}
+        </div>
+        <Button
+          style={{ marginTop: '20px' }}
+          type="primary"
+          disabled={!powerBlock}
+          onClick={() => getMonitor()}
+        >
+          Keyingi
+        </Button>
+      </div>
+    );
+  }
+
+  if (wifiData.length === 0) {
+    return (
+      <div className="p-6">
+        <h2 className="text-2xl font-semibold text-center mb-6">
+          Monitor tanlang
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {monitorData.map((item) => (
+            <Card
+              key={item.id}
+              title={item.name}
+              className={`transition-all duration-300 shadow-md hover:shadow-lg rounded-2xl border-2 ${
+                selectedMonitorId === item.id
+                  ? 'border-green-500'
+                  : 'border-gray-200'
+              }`}
+              extra={
+                selectedMonitorId === item.id ? (
+                  <CheckCircleOutlined className="text-green-500 text-xl" />
+                ) : null
+              }
+              style={{ borderRadius: '16px' }}
+            >
+              <p>
+                <strong>Nomi:</strong> {item.name}
+              </p>
+
+              <p>
+                <strong>Pixel:</strong> {item.pixel}
+              </p>
+              <p>
+                <strong>Narxi:</strong> ${item.price}
+              </p>
+              <Button
+                type={selectedMonitorId === item.id ? 'primary' : 'default'}
+                block
+                className="mt-4 rounded-xl"
+                onClick={() => handleMonitorSelect(item)}
+              >
+                {selectedMonitorId === item.id ? 'Tanlangan' : 'Tanlash'}
+              </Button>
+            </Card>
+          ))}
+        </div>
+        <Button
+          style={{ marginTop: '20px' }}
+          type="primary"
+          disabled={!selectedMonitorId}
+          onClick={() =>{
+            getWifi();
           }}
         >
           Keyingi
@@ -309,53 +658,53 @@ const CompyuterPageData = ({
   }
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-semibold text-center mb-6">
-        Quvvat manbaini tanlang
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {powerunit.map((item) => (
-          <Card
-            key={item.id}
-            title={item.name}
-            className={`transition-all duration-300 shadow-md hover:shadow-lg rounded-2xl border-2 ${
-              powerBlock?.id === item.id
-                ? 'border-green-500'
-                : 'border-gray-200'
-            }`}
-            extra={
-              powerBlock?.id === item.id ? (
-                <CheckCircleOutlined className="text-green-500 text-xl" />
-              ) : null
-            }
-            style={{ borderRadius: '16px' }}
-          >
-            <p>
-              <strong>Quvvati:</strong> {item.power}W
-            </p>
-            <p>
-              <strong>Narxi:</strong> ${item.price}
-            </p>
-            <Button
-              type={powerBlock?.id === item.id ? 'primary' : 'default'}
-              block
-              className="mt-4 rounded-xl"
-              onClick={() => handlePowerSelect(item)}
+      <div className="p-6">
+        <h2 className="text-2xl font-semibold text-center mb-6">
+          Wifi tanlang
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {wifiData.map((item) => (
+            <Card
+              key={item.id}
+              title={item.name}
+              className={`transition-all duration-300 shadow-md hover:shadow-lg rounded-2xl border-2 ${
+                selectedWifiId === item.id
+                  ? 'border-green-500'
+                  : 'border-gray-200'
+              }`}
+              extra={
+                selectedWifiId === item.id ? (
+                  <CheckCircleOutlined className="text-green-500 text-xl" />
+                ) : null
+              }
+              style={{ borderRadius: '16px' }}
             >
-              {powerBlock?.id === item.id ? 'Tanlangan' : 'Tanlash'}
-            </Button>
-          </Card>
-        ))}
+              <p>
+                <strong>Nomi:</strong> {item.name}
+              </p>
+              <p>
+                <strong>Narxi:</strong> ${item.price}
+              </p>
+              <Button
+                type={selectedWifiId === item.id ? 'primary' : 'default'}
+                block
+                className="mt-4 rounded-xl"
+                onClick={() => handleWifiSelect(item)}
+              >
+                {selectedWifiId === item.id ? 'Tanlangan' : 'Tanlash'}
+              </Button>
+            </Card>
+          ))}
+        </div>
+        <Button
+          style={{ marginTop: '20px' }}
+          type="primary"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Yig'ilgan narsalarni ko'rish
+        </Button>
       </div>
-      <Button
-      style={{marginTop: "20px"}}
-        type="primary"
-        onClick={() => setIsModalOpen(true)}
-      >
-        Yig'ilgan narsalarni ko'rish
-      </Button>
-    </div>
-  );
+    );
 };
 
 export default CompyuterPageData;

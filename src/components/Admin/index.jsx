@@ -14,7 +14,7 @@ import {
   VideoCameraOutlined,
   KeyOutlined,
   CloudServerOutlined,
-  WifiOutlined
+  WifiOutlined,
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme, Avatar, Dropdown } from 'antd';
 import useUserData from '../../hooks/useUserData';
@@ -133,19 +133,19 @@ const Admin = ({ children }) => {
             },
             {
               key: '10',
-              icon: <KeyOutlined/>,
+              icon: <KeyOutlined />,
               label: "Keys qo'shish",
               onClick: () => navigate('/admin-keys'),
             },
             {
               key: '11',
-              icon: <CloudServerOutlined/>,
+              icon: <CloudServerOutlined />,
               label: "Memories qo'shish",
               onClick: () => navigate('/admin-memories'),
             },
             {
               key: '12',
-              icon: <DesktopOutlined/>,
+              icon: <DesktopOutlined />,
               label: "Monitor qo'shish",
               onClick: () => navigate('/admin-monitor'),
             },
@@ -155,11 +155,25 @@ const Admin = ({ children }) => {
               label: "Wifi qo'shish",
               onClick: () => navigate('/admin-wifi'),
             },
-             {
+            {
               key: '14',
-              icon: <WifiOutlined />,
+              icon: <DatabaseOutlined />,
               label: "Rams qo'shish",
               onClick: () => navigate('/admin-rams'),
+            },
+
+            {
+              key: '15',
+              icon: <DatabaseOutlined />,
+              label: "Category Product qo'shish",
+              onClick: () => navigate('/admin-category-product'),
+            },
+
+            {
+              key: '16',
+              icon: <DatabaseOutlined />,
+              label: "Product qo'shish",
+              onClick: () => navigate('/admin-product'),
             },
           ]}
         />

@@ -8,9 +8,18 @@ const useCompyuter = () => {
   const [cpuData, setCpuData] = useState([]);
   const [motherBoardId, setMotherBoardId] = useState(null);
   const [motherBoardData, setMotherBoardData] = useState([]);
-  const [otherData, setOtherData] = useState([]);
-  const [otherDataId, setOtherDataId] = useState(null);
-  const [powerunit, setPowerUnit]= useState([])
+  const [gpuData, setGpuData] = useState([]);
+  const [gpuDataId, setGpuDataId] = useState(null);
+  const [ramData, setRamData] = useState([]);
+  const [ramDataId, setRamDataId] = useState(null);
+  const [memoriesData, setMemoriesData] = useState([]);
+  const [collerDataId, setCollerDataId] = useState(null);
+  const [collerData, setCollerData] = useState([]);
+  const [keysDataId, setKeysDataId] = useState(null);
+  const [keysData, setKeysData] = useState([]);
+  const [monitorData, setMonitorData] = useState([]);
+  const [powerunit, setPowerUnit] = useState([]);
+  const [wifiData, setWifiData] = useState([]);
 
   const getCompyuter = async () => {
     try {
@@ -48,11 +57,60 @@ const useCompyuter = () => {
     }
   };
 
-  const getOtherData = async () => {
-    if (!otherDataId) return;
+  const getGpusData = async () => {
+    if (!gpuDataId) return;
     try {
-      const res = await Api.get(`/others-by-category/${otherDataId}/`);
-      setOtherData(res.data);
+      const res = await Api.get(`/gpus-customer/${gpuDataId}/`);
+      setGpuData(res.data);
+      if (res?.data?.length === 0) {
+        message.error('Tanlagan MotherBoard uchun qismlar mavjud emas');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getRamsData = async () => {
+    if (!ramDataId) return;
+    try {
+      const res = await Api.get(`/rams-customer/${ramDataId}/`);
+      setRamData(res.data);
+      if (res?.data?.length === 0) {
+        message.error('Tanlagan MotherBoard uchun qismlar mavjud emas');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getMemories = async () => {
+    try {
+      const res = await Api.get(`/memories-customer/`);
+      setMemoriesData(res.data);
+      if (res?.data?.length === 0) {
+        message.error('Tanlagan MotherBoard uchun qismlar mavjud emas');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getColler = async () => {
+    try {
+      const res = await Api.get(`/collers-customer/${collerDataId}/`);
+      setCollerData(res.data);
+      if (res?.data?.length === 0) {
+        message.error('Tanlagan MotherBoard uchun qismlar mavjud emas');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+   const getKeys = async () => {
+    try {
+      const res = await Api.get(`/keys-customer/${keysDataId}/`);
+      setKeysData(res.data);
       if (res?.data?.length === 0) {
         message.error('Tanlagan MotherBoard uchun qismlar mavjud emas');
       }
@@ -62,13 +120,37 @@ const useCompyuter = () => {
   };
 
   const getPowerUnit = async (power, vidoe) => {
-    if (!otherDataId) return;
+    // if (!otherDataId) return;
     try {
       const res = await Api.post(`/powerunit/`, {
         cpu_power: power,
         videocard_power: vidoe,
       });
       setPowerUnit(res.data);
+      if (res?.data?.length === 0) {
+        message.error('Tanlagan MotherBoard uchun qismlar mavjud emas');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+   const getMonitor = async () => {
+    try {
+      const res = await Api.get(`/monitors-customer/`);
+      setMonitorData(res.data);
+      if (res?.data?.length === 0) {
+        message.error('Tanlagan MotherBoard uchun qismlar mavjud emas');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getWifi = async () => {
+    try {
+      const res = await Api.get(`/wifi-customer/`);
+      setWifiData(res.data);
       if (res?.data?.length === 0) {
         message.error('Tanlagan MotherBoard uchun qismlar mavjud emas');
       }
@@ -90,8 +172,20 @@ const useCompyuter = () => {
   }, [motherBoardId]);
 
   React.useEffect(() => {
-    getOtherData();
-  }, [otherDataId]);
+    getGpusData();
+  }, [gpuDataId]);
+
+  React.useEffect(() => {
+    getRamsData();
+  }, [ramDataId]);
+
+  React.useEffect(() => {
+    getColler();
+  }, [collerDataId]);
+
+  React.useEffect(() => {
+    getKeys();
+  }, [keysDataId]);
 
   React.useEffect(() => {
     getPowerUnit();
@@ -103,10 +197,22 @@ const useCompyuter = () => {
     cpuData,
     setMotherBoardId,
     motherBoardData,
-    setOtherDataId,
-    otherData,
+    setGpuDataId,
+    gpuData,
+    ramData,
+    setRamDataId,
+    memoriesData,
+    getMemories,
+    setCollerDataId,
+    collerData,
+    setKeysDataId,
+    keysData,
+    monitorData,
+    getMonitor,
     powerunit,
-    getPowerUnit
+    getPowerUnit,
+    wifiData,
+    getWifi,
   };
 };
 

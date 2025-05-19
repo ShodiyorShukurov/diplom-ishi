@@ -96,6 +96,12 @@ const Customer = ({ children }) => {
               label: "Kompyuter yig'ish",
               onClick: () => navigate('/customer-compyuter'),
             },
+            {
+              key: '2',
+              icon: <VideoCameraOutlined />,
+              label: "Rasmlar yig'ish",
+              onClick: () => navigate('/customer-picture'),
+            },
           ]}
         />
       </Sider>

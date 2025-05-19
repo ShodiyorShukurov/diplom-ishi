@@ -11,14 +11,25 @@ const CompyuterPage = () => {
     cpuData,
     setMotherBoardId,
     motherBoardData,
-    setOtherDataId,
-    otherData,
+    setGpuDataId,
+    gpuData,
+    ramData,
+    setRamDataId,
+    memoriesData,
+    getMemories,
+    setCollerDataId,
+    collerData,
+    setKeysDataId,
+    keysData,
     powerunit,
-    getPowerUnit
+    getPowerUnit,
+    monitorData,
+    getMonitor,
+    wifiData,
+    getWifi,
   } = useCompyuter();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
 
   return (
     <Customer>
@@ -28,14 +39,29 @@ const CompyuterPage = () => {
         cpuData={cpuData}
         setMotherBoardId={setMotherBoardId}
         motherBoardData={motherBoardData}
-        setOtherDataId={setOtherDataId}
-        otherData={otherData}
+        setGpuDataId={setGpuDataId}
+        gpuData={gpuData}
+        ramData={ramData}
+        setRamDataId={setRamDataId}
+        memoriesData={memoriesData}
+        getMemories={getMemories}
+        setCollerDataId={setCollerDataId}
+        collerData={collerData}
+        setKeysDataId={setKeysDataId}
+        keysData={keysData}
         powerunit={powerunit}
         getPowerUnit={getPowerUnit}
+        monitorData={monitorData}
+        getMonitor={getMonitor}
         setIsModalOpen={setIsModalOpen}
+        wifiData={wifiData}
+        getWifi={getWifi}
       />
 
-      <CollectedPartsModal open={isModalOpen} onClose={()=>setIsModalOpen(false)}/>
+      <CollectedPartsModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </Customer>
   );
 };

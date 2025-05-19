@@ -2,7 +2,7 @@ import { Table, Tag, Button, Popconfirm, Card, Typography } from 'antd';
 import {
   DeleteOutlined,
   EditOutlined,
-  VideoCameraOutlined,
+  DatabaseOutlined,
 } from '@ant-design/icons';
 
 const { Title } = Typography;
@@ -99,7 +99,7 @@ const AdminGpusData = ({ ramsData, openEditModal, handleDelete }) => {
     <Card
       title={
         <Title level={4}>
-          <VideoCameraOutlined style={{ marginRight: '8px' }} />
+          <DatabaseOutlined style={{ marginRight: '8px' }} />
           Rams Inventory
         </Title>
       }

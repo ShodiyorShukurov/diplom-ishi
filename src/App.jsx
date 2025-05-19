@@ -23,6 +23,8 @@ import AdminMemoriesPage from './pages/AdminMemories/AdminMemoriesPage';
 import AdminMonitorsPage from './pages/AdminMonitors/AdminMonitorsPage';
 import AdminWifiPage from './pages/AdminWifi/AdminWifiPage';
 import AdminRamsPage from './pages/AdminRams/AdminRamsPage';
+import AdminCategoryProductPage from './pages/AdminCategoryProduct/AdminCategoryProductPage';
+import PictureData from './pages/Picture/PictureData';
 
 const App = () => {
   return (
@@ -52,6 +54,8 @@ const App = () => {
         <Route path='/admin-monitor' element={<AdminMonitorsPage/>} />
         <Route path='/admin-wifi' element={<AdminWifiPage/>} />
         <Route path='/admin-rams' element={<AdminRamsPage/>} />
+        <Route path='/admin-category-product' element={<AdminCategoryProductPage/>} />
+        <Route path='/customer-picture' element={<PictureData/>} />
       </Route>
       {/* <Route path="/customer-post" element={< />} /> */}
     </Routes>

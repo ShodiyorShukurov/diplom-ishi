@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Popconfirm, Table, Image } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
-const AdminProductData = ({ productData, handleDelete, openEditModal }) => {
+const AdminCategoryProductData = ({ categoryProductData, handleDelete, openEditModal }) => {
   const columns = [
     {
       title: '№',
@@ -18,30 +18,17 @@ const AdminProductData = ({ productData, handleDelete, openEditModal }) => {
       align: 'center',
     },
     {
-      title: 'Price',
-      key: 'price',
-      dataIndex: 'price',
-      align: 'center',
-      render: (price) => <p>${price}</p>,
-    },
-    {
-      title: 'Image',
-      dataIndex: 'image',
-      key: 'image',
-      align: 'center',
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+      align: "center",
       render: (text) => (
         <Image
           src={text}
-          alt="product"
-          style={{ width: '50px', height: '50px', borderRadius: '5px' }}
+          style={{ width: "50px", height: "50px", borderRadius: "5px" }}
         />
       ),
-    },
-    {
-      title: 'Category',
-      dataIndex: 'category',
-      key: 'category',
-      align: 'center',
+      
     },
     {
       title: 'Action',
@@ -76,10 +63,10 @@ const AdminProductData = ({ productData, handleDelete, openEditModal }) => {
     <Table
       className="mt-6"
       columns={columns}
-      dataSource={productData}
+      dataSource={categoryProductData}
       key={'1'}
       pagination={false}
     />
   );
 };
-export default AdminProductData;
+export default AdminCategoryProductData;
